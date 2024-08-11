@@ -3,13 +3,13 @@ use crate::{
     string_helpers::StringHelpers,
 };
 
-pub struct Tokenizer<'a> {
-    input: &'a str,
+pub struct Tokenizer {
+    input: String,
     position: usize,
 }
 
-impl<'a> Tokenizer<'a> {
-    pub fn new(input: &'a str) -> Self {
+impl Tokenizer {
+    pub fn new(input: String) -> Self {
         Tokenizer { input, position: 0 }
     }
 
@@ -139,7 +139,7 @@ mod tests {
 
     #[test]
     fn when_next_token_is_string_value_type_return_value_token_type() {
-        let mut tokeinzer = Tokenizer::new("\"StringValue\",  ");
+        let mut tokeinzer = Tokenizer::new("\"StringValue\",  ".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -152,7 +152,7 @@ mod tests {
 
     #[test]
     fn when_next_token_is_number_value_type_return_value_token_type() {
-        let mut tokeinzer = Tokenizer::new("123631 ,");
+        let mut tokeinzer = Tokenizer::new("123631 ,".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -162,7 +162,7 @@ mod tests {
 
     #[test]
     fn when_next_token_is_left_paren_value_type_return_punctuation_left_paren_token_type() {
-        let mut tokeinzer = Tokenizer::new("(collumn_name ");
+        let mut tokeinzer = Tokenizer::new("(collumn_name ".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -175,7 +175,7 @@ mod tests {
 
     #[test]
     fn when_next_token_is_right_paren_value_type_return_punctuation_right_paren_token_type() {
-        let mut tokeinzer = Tokenizer::new("); ");
+        let mut tokeinzer = Tokenizer::new("); ".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -188,7 +188,7 @@ mod tests {
 
     #[test]
     fn when_next_token_value_is_comma_return_comma_token_type() {
-        let mut tokeinzer = Tokenizer::new(",collumn1    ");
+        let mut tokeinzer = Tokenizer::new(",collumn1    ".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -198,7 +198,7 @@ mod tests {
 
     #[test]
     fn when_next_token_is_semicollon_value_type_return_punctuation_semicollon_token_type() {
-        let mut tokeinzer = Tokenizer::new(";    ");
+        let mut tokeinzer = Tokenizer::new(";    ".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -211,7 +211,7 @@ mod tests {
 
     #[test]
     fn when_next_token_value_is_create_return_keyowrd_create_token_type() {
-        let mut tokeinzer = Tokenizer::new("CREATE ");
+        let mut tokeinzer = Tokenizer::new("CREATE ".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -221,7 +221,7 @@ mod tests {
 
     #[test]
     fn when_next_token_value_is_table_return_keyowrd_table_token_type() {
-        let mut tokeinzer = Tokenizer::new("TABLE ");
+        let mut tokeinzer = Tokenizer::new("TABLE ".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -231,7 +231,7 @@ mod tests {
 
     #[test]
     fn when_next_token_value_is_insert_return_keyword_insert_token_type() {
-        let mut tokeinzer = Tokenizer::new("INSERT ");
+        let mut tokeinzer = Tokenizer::new("INSERT ".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -241,7 +241,7 @@ mod tests {
 
     #[test]
     fn when_next_token_value_is_into_return_keyword_into_token_type() {
-        let mut tokeinzer = Tokenizer::new("INTO ");
+        let mut tokeinzer = Tokenizer::new("INTO ".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -251,7 +251,7 @@ mod tests {
 
     #[test]
     fn when_next_token_value_is_values_return_keyword_values_token_type() {
-        let mut tokeinzer = Tokenizer::new("VALUES (");
+        let mut tokeinzer = Tokenizer::new("VALUES (".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -261,7 +261,7 @@ mod tests {
 
     #[test]
     fn when_next_token_value_is_primary_return_keyword_primary_token_type() {
-        let mut tokeinzer = Tokenizer::new("PRIMARY ");
+        let mut tokeinzer = Tokenizer::new("PRIMARY ".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -271,7 +271,7 @@ mod tests {
 
     #[test]
     fn when_next_token_value_is_key_return_keyword_key_token_type() {
-        let mut tokeinzer = Tokenizer::new("KEY ");
+        let mut tokeinzer = Tokenizer::new("KEY ".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -281,7 +281,7 @@ mod tests {
 
     #[test]
     fn when_next_token_value_is_int_return_data_type_int_token_type() {
-        let mut tokeinzer = Tokenizer::new("INT,");
+        let mut tokeinzer = Tokenizer::new("INT,".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -291,7 +291,7 @@ mod tests {
 
     #[test]
     fn when_next_token_value_is_varchar_return_keyword_varchar_token_type() {
-        let mut tokeinzer = Tokenizer::new("VARCHAR ");
+        let mut tokeinzer = Tokenizer::new("VARCHAR ".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -301,7 +301,7 @@ mod tests {
 
     #[test]
     fn when_next_token_value_is_indentifer_return_indentifier_token_type() {
-        let mut tokeinzer = Tokenizer::new("indentifer_1 ");
+        let mut tokeinzer = Tokenizer::new("indentifer_1 ".to_string());
         let next_token = tokeinzer.next_token();
 
         assert_eq!(
@@ -313,7 +313,7 @@ mod tests {
 
     #[test]
     fn when_next_token_value_is_wildcard_return_wildcard_token_type() {
-        let mut tokeinzer = Tokenizer::new("* ");
+        let mut tokeinzer = Tokenizer::new("* ".to_string());
 
         let next_token = tokeinzer.next_token();
 
@@ -324,7 +324,8 @@ mod tests {
     #[test]
     fn when_create_command_is_inputed_return_correct_tokens() {
         let mut tokeinzer = Tokenizer::new(
-            "CREATE TABLE table_name (collumn1 INT, collumn2 VARCHAR, PRIMARY KEY (collumn1));",
+            "CREATE TABLE table_name (collumn1 INT, collumn2 VARCHAR, PRIMARY KEY (collumn1));"
+                .to_string(),
         );
         let mut result = Vec::new();
 
@@ -358,7 +359,8 @@ mod tests {
 
     #[test]
     fn when_insert_command_is_inputed_return_correct_tokens() {
-        let mut tokenizer = Tokenizer::new("INSERT INTO table_name (123, \"stringValue\");");
+        let mut tokenizer =
+            Tokenizer::new("INSERT INTO table_name (123, \"stringValue\");".to_string());
         let mut result = Vec::new();
 
         while let Ok(Some(token)) = tokenizer.next_token() {
@@ -383,7 +385,7 @@ mod tests {
 
     #[test]
     fn when_select_command_is_inputed_return_correct_tokens() {
-        let mut tokenizer = Tokenizer::new("SELECT * FROM Customers;");
+        let mut tokenizer = Tokenizer::new("SELECT * FROM Customers;".to_string());
         let mut result = Vec::new();
 
         while let Ok(Some(token)) = tokenizer.next_token() {

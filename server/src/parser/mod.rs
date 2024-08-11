@@ -1,12 +1,12 @@
-mod ast;
-mod token;
+pub mod ast;
+pub mod token;
 mod tokenizer;
 
 use ast::{ColumnDefinition, Columns, SqlStatement};
 use token::{DataType, Keyword, Punctuation, Token, Value};
 use tokenizer::Tokenizer;
 
-fn parse(input: &str) -> Result<SqlStatement, String> {
+pub fn parse(input: String) -> Result<SqlStatement, String> {
     let mut tokenizer = Tokenizer::new(input);
     match tokenizer.peek()? {
         Some(Token::Keyword(Keyword::Create)) => parse_create_command(tokenizer),
@@ -256,12 +256,15 @@ fn expect_punctuation(
 
 #[cfg(test)]
 mod tests {
+    use std::net::ToSocketAddrs;
+
     use super::*;
 
     #[test]
     fn when_create_command_is_inputed_return_correct_ast() {
         let command =
-            "CREATE TABLE table_name (collumn1 INT, collumn2 VARCHAR, PRIMARY KEY (collumn1));";
+            "CREATE TABLE table_name (collumn1 INT, collumn2 VARCHAR, PRIMARY KEY (collumn1));"
+                .to_string();
 
         let result = parse(command);
 
@@ -286,7 +289,8 @@ mod tests {
 
     #[test]
     fn when_insert_command_is_inputed_return_correct_ast() {
-        let command = "INSERT INTO table_name (collumn1, collumn2) VALUES (12, \"value2\");";
+        let command =
+            "INSERT INTO table_name (collumn1, collumn2) VALUES (12, \"value2\");".to_string();
 
         let result = parse(command);
 
@@ -305,7 +309,7 @@ mod tests {
 
     #[test]
     fn when_select_command_is_inputed_return_correct_ast() {
-        let command = "SELECT collumn1, collumn2 FROM table_name;";
+        let command = "SELECT collumn1, collumn2 FROM table_name;".to_string();
 
         let result = parse(command);
 
@@ -322,7 +326,7 @@ mod tests {
 
     #[test]
     fn when_select_command_with_wildcard_is_inputed_return_correct_ast() {
-        let command = "SELECT * FROM table_name;";
+        let command = "SELECT * FROM table_name;".to_string();
 
         let result = parse(command);
 
