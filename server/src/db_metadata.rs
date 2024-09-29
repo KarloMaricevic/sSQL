@@ -8,14 +8,14 @@ use std::io::Write;
 use std::path::Path;
 
 #[derive(Debug, PartialEq)]
-struct DbMetadata {
-    table_pointers: HashMap<String, String, Xxh3HasherBuilder>,
-    table_schemas: HashMap<String, TableSchema, Xxh3HasherBuilder>,
+pub struct DbMetadata {
+    pub table_pointers: HashMap<String, String, Xxh3HasherBuilder>,
+    pub table_schemas: HashMap<String, TableSchema, Xxh3HasherBuilder>,
 }
 
 #[derive(Debug, PartialEq)]
-struct TableSchema {
-    row_definitions: HashMap<String, ast::DataType, Xxh3HasherBuilder>,
+pub struct TableSchema {
+    pub row_definitions: HashMap<String, ast::DataType, Xxh3HasherBuilder>,
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
