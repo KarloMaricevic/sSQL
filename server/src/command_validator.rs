@@ -1,4 +1,4 @@
-use crate::db_metadata::DbMetadata;
+/* use crate::db_metadata::DbMetadata;
 use crate::parser::ast::{Columns, DataType, SqlStatement, Value};
 
 pub fn validate_command(command: &SqlStatement, metadata: &DbMetadata) -> Result<(), String> {
@@ -96,3 +96,4 @@ pub fn validate_command(command: &SqlStatement, metadata: &DbMetadata) -> Result
     }
     Ok(())
 }
+ */
